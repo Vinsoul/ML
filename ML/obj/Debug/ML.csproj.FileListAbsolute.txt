@@ -1,0 +1,8 @@
+c:\users\denis\documents\visual studio 2017\Projects\ML\ML\bin\Debug\ML.exe.config
+c:\users\denis\documents\visual studio 2017\Projects\ML\ML\bin\Debug\ML.exe
+c:\users\denis\documents\visual studio 2017\Projects\ML\ML\bin\Debug\ML.pdb
+c:\users\denis\documents\visual studio 2017\Projects\ML\ML\bin\Debug\MathNet.Numerics.dll
+c:\users\denis\documents\visual studio 2017\Projects\ML\ML\bin\Debug\MathNet.Numerics.xml
+c:\users\denis\documents\visual studio 2017\Projects\ML\ML\obj\Debug\ML.csprojResolveAssemblyReference.cache
+c:\users\denis\documents\visual studio 2017\Projects\ML\ML\obj\Debug\ML.exe
+c:\users\denis\documents\visual studio 2017\Projects\ML\ML\obj\Debug\ML.pdb
