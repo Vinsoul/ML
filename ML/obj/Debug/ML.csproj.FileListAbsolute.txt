@@ -15,3 +15,12 @@ C:\Users\Администратор\Documents\GitHub\ML\ML\obj\Debug\ML.csprojRe
 C:\Users\Администратор\Documents\GitHub\ML\ML\obj\Debug\ML.csproj.CoreCompileInputs.cache
 C:\Users\Администратор\Documents\GitHub\ML\ML\obj\Debug\ML.exe
 C:\Users\Администратор\Documents\GitHub\ML\ML\obj\Debug\ML.pdb
+C:\Users\Vinogradov\Documents\GitHub\ML\ML\bin\Debug\ML.exe.config
+C:\Users\Vinogradov\Documents\GitHub\ML\ML\bin\Debug\ML.exe
+C:\Users\Vinogradov\Documents\GitHub\ML\ML\bin\Debug\ML.pdb
+C:\Users\Vinogradov\Documents\GitHub\ML\ML\bin\Debug\MathNet.Numerics.dll
+C:\Users\Vinogradov\Documents\GitHub\ML\ML\bin\Debug\MathNet.Numerics.xml
+C:\Users\Vinogradov\Documents\GitHub\ML\ML\obj\Debug\ML.csprojResolveAssemblyReference.cache
+C:\Users\Vinogradov\Documents\GitHub\ML\ML\obj\Debug\ML.csproj.CoreCompileInputs.cache
+C:\Users\Vinogradov\Documents\GitHub\ML\ML\obj\Debug\ML.exe
+C:\Users\Vinogradov\Documents\GitHub\ML\ML\obj\Debug\ML.pdb
