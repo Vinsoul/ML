@@ -12,35 +12,60 @@ namespace ML
         static void Main(string[] args)
         {
             NeuralNetwork nn = new NeuralNetwork(1, new[] { 3, 2 });
-            for (int i = 0; i < 10000; i++)
+            nn.Learn(inputs, expected, 0.01);
+
+            int total = 0;
+            int success = 0;
+            for (double i = 0; i <= 1; i += 0.001)
             {
-                for (double x = 0; x <= 1; x += 0.01)
+
+                double[] result = nn.GetValue(new double[] { i });
+                if (i <= 0.5)
                 {
-                    double[] expected = Math.Round(x) == (int)x ? new[] { 1.0, 0.0 } : new[] { 0.0, 1.0 };
-                    nn.Learn(new double[] { x - (int)x }, expected, 0.001);
+                    if (result[0] > result[1])
+                        success++;
+                    else
+                        Console.WriteLine($"{i} {result[0]} {result[1]}");
                 }
+                else
+                {
+                    if (result[0] < result[1])
+                        success++;
+                    else
+                        Console.WriteLine($"{i} {result[0]} {result[1]}");
+                }
+                total++;
             }
-            double[] test = new[] { 0.95 };
-            foreach (double result in nn.GetValue(test))
-                Console.WriteLine(result);
-            test = new[] { 0.15 };
-            foreach (double result in nn.GetValue(test))
-                Console.WriteLine(result);
-            test = new[] { 0.25 };
-            foreach (double result in nn.GetValue(test))
-                Console.WriteLine(result);
-            test = new[] { 0.35 };
-            foreach (double result in nn.GetValue(test))
-                Console.WriteLine(result);
-            test = new[] { 0.45 };
-            foreach (double result in nn.GetValue(test))
-                Console.WriteLine(result);
-            test = new[] { 0.55 };
-            foreach (double result in nn.GetValue(test))
-                Console.WriteLine(result);
-            test = new[] { 0.85 };
-            foreach (double result in nn.GetValue(test))
-                Console.WriteLine(result);
+
+            Console.WriteLine(success + " " + total);
         }
+
+        static List<List<double>> inputs = new List<List<double>>()
+        {
+            { new List<double>() { 0.1 } },
+            { new List<double>() { 0.2 } },
+            { new List<double>() { 0.3 } },
+            { new List<double>() { 0.4 } },
+            { new List<double>() { 0.5 } },
+            { new List<double>() { 0.6 } },
+            { new List<double>() { 0.7 } },
+            { new List<double>() { 0.8 } },
+            { new List<double>() { 0.9 } },
+            { new List<double>() { 1.0 } }
+        };
+
+        static List<List<double>> expected = new List<List<double>>()
+        {
+            { new List<double>() { 1, 0 } },
+            { new List<double>() { 1, 0 } },
+            { new List<double>() { 1, 0 } },
+            { new List<double>() { 1, 0 } },
+            { new List<double>() { 1, 0 } },
+            { new List<double>() { 0, 1 } },
+            { new List<double>() { 0, 1 } },
+            { new List<double>() { 0, 1 } },
+            { new List<double>() { 0, 1 } },
+            { new List<double>() { 0, 1 } }
+        };
     }
 }

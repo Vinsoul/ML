@@ -52,51 +52,58 @@ namespace ML
             return one.PointwiseDivide(one + z.PointwiseExp());
         }
 
-        public void Learn(IEnumerable<double> inputs, IEnumerable<double> expectedOutputs, double learningRate)
+        public void Learn(List<List<double>> inputs, List<List<double>> expectedOutputs, double learningRate)
         {
-            Vector<double> input = Vector<double>.Build.DenseOfEnumerable(inputs);
-            Vector<double> expected = Vector<double>.Build.DenseOfEnumerable(expectedOutputs);
-
-            List<Vector<double>> neuronsValues = new List<Vector<double>>(Weights.Count + 1);
-
-            for (int i = 0; i < Weights.Count; i++)
+            int epochs = 200000;
+            for (int epoch = 0; epoch < epochs; epoch++)
             {
-                input = Sigmoid(input * Weights[i] + Biases[i]);
-                neuronsValues.Add(input);
-            }
-
-            for (int L = neuronsValues.Count - 1; L >= 1; L--)
-            {
-                // Adjusting weights
-                for (int j = 0; j < Weights[L].RowCount; j++)
+                for (int inputIndex = 0; inputIndex < inputs.Count; inputIndex++)
                 {
-                    for (int k = 0; k < Weights[L].ColumnCount; k++)
+                    Vector<double> input = Vector<double>.Build.DenseOfEnumerable(inputs[inputIndex]);
+                    Vector<double> expected = Vector<double>.Build.DenseOfEnumerable(expectedOutputs[inputIndex]);
+
+                    List<Vector<double>> neuronsValues = new List<Vector<double>>(Weights.Count + 1);
+
+                    for (int i = 0; i < Weights.Count; i++)
                     {
-                        double dC_dWjk = neuronsValues[L - 1][j] * neuronsValues[L][k] * (1 - neuronsValues[L][k]) * (neuronsValues[L][k] - expected[k]);
-                        Weights[L][j, k] = Weights[L][j, k] - learningRate * dC_dWjk;
+                        input = Sigmoid(input * Weights[i] + Biases[i]);
+                        neuronsValues.Add(input);
                     }
-                }
 
-                // Adjusting biases
-                for (int k = 0; k < Biases[L].Count; k++)
-                {
-                    double dC_dBj = neuronsValues[L][k] * (1 - neuronsValues[L][k]) * (neuronsValues[L][k] - expected[k]);
-                    Biases[L][k] = Biases[L][k] - learningRate * dC_dBj;
-                }
-
-                // Adjusting neuron values
-                if (L != 0)
-                {
-                    expected = Vector<double>.Build.Dense(neuronsValues[L - 1].Count);
-                    for (int k = 0; k < neuronsValues[L - 1].Count; k++)
+                    for (int L = neuronsValues.Count - 1; L >= 1; L--)
                     {
-                        double dC_dAk = 0;
-                        for (int j = 0; j < neuronsValues[L].Count; j++)
+                        // Adjusting weights
+                        for (int j = 0; j < Weights[L].RowCount; j++)
                         {
-                            dC_dAk += Weights[L][k, j] * neuronsValues[L][j] * (1 - neuronsValues[L][j]) * (neuronsValues[L][j] - expected[j]);
+                            for (int k = 0; k < Weights[L].ColumnCount; k++)
+                            {
+                                double dC_dWjk = neuronsValues[L - 1][j] * neuronsValues[L][k] * (1 - neuronsValues[L][k]) * (neuronsValues[L][k] - expected[k]);
+                                Weights[L][j, k] = Weights[L][j, k] - learningRate * dC_dWjk;
+                            }
                         }
 
-                        expected[k] = neuronsValues[L-1][k] - learningRate * dC_dAk;
+                        // Adjusting biases
+                        for (int k = 0; k < Biases[L].Count; k++)
+                        {
+                            double dC_dBj = neuronsValues[L][k] * (1 - neuronsValues[L][k]) * (neuronsValues[L][k] - expected[k]);
+                            Biases[L][k] = Biases[L][k] - learningRate * dC_dBj;
+                        }
+
+                        // Adjusting neuron values
+                        if (L != 0)
+                        {
+                            expected = Vector<double>.Build.Dense(neuronsValues[L - 1].Count);
+                            for (int k = 0; k < neuronsValues[L - 1].Count; k++)
+                            {
+                                double dC_dAk = 0;
+                                for (int j = 0; j < neuronsValues[L].Count; j++)
+                                {
+                                    dC_dAk += Weights[L][k, j] * neuronsValues[L][j] * (1 - neuronsValues[L][j]) * (neuronsValues[L][j] - expected[j]);
+                                }
+
+                                expected[k] = neuronsValues[L - 1][k] - learningRate * dC_dAk;
+                            }
+                        }
                     }
                 }
             }
