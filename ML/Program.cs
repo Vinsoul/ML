@@ -12,7 +12,7 @@ namespace ML
         static void Main(string[] args)
         {
             NeuralNetwork nn = new NeuralNetwork(1, new[] { 3, 2 });
-            nn.Learn(inputs, expected, 0.01);
+            nn.Learn(inputs, expected, 0.001);
 
             int total = 0;
             int success = 0;
@@ -50,13 +50,11 @@ namespace ML
             { new List<double>() { 0.6 } },
             { new List<double>() { 0.7 } },
             { new List<double>() { 0.8 } },
-            { new List<double>() { 0.9 } },
-            { new List<double>() { 1.0 } }
+            { new List<double>() { 0.9 } }
         };
 
         static List<List<double>> expected = new List<List<double>>()
         {
-            { new List<double>() { 1, 0 } },
             { new List<double>() { 1, 0 } },
             { new List<double>() { 1, 0 } },
             { new List<double>() { 1, 0 } },

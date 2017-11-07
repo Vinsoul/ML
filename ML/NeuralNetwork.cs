@@ -54,9 +54,12 @@ namespace ML
 
         public void Learn(List<List<double>> inputs, List<List<double>> expectedOutputs, double learningRate)
         {
-            int epochs = 200000;
-            for (int epoch = 0; epoch < epochs; epoch++)
+            double prevCost = AverageCost(inputs, expectedOutputs);
+            double currentCost = 0;
+            while (Math.Abs(prevCost - currentCost) >= 0.1 * learningRate * learningRate)
             {
+                prevCost = currentCost;
+                Shuffle(inputs, expectedOutputs);
                 for (int inputIndex = 0; inputIndex < inputs.Count; inputIndex++)
                 {
                     Vector<double> input = Vector<double>.Build.DenseOfEnumerable(inputs[inputIndex]);
@@ -106,12 +109,40 @@ namespace ML
                         }
                     }
                 }
+                currentCost = AverageCost(inputs, expectedOutputs);
             }
         }
 
         private double Cost(Vector<double> expected, Vector<double> actual)
         {
             return 0.5 * (expected - actual).PointwisePower(2).Sum();
+        }
+
+        private double AverageCost(List<List<double>> inputs, List<List<double>> expected)
+        {
+            double sum = 0;
+            for (int i = 0; i < inputs.Count; i++)
+            {
+                sum += Cost(Vector<double>.Build.DenseOfEnumerable(expected[i]), Vector<double>.Build.DenseOfArray(GetValue(inputs[i])));
+            }
+
+            return sum / expected.Count;
+        }
+
+        private void Shuffle<T>(List<T> inputs, List<T> expected)
+        {
+            Random rand = new Random();
+            for (int i = 0; i < inputs.Count; i++)
+            {
+                int j = rand.Next(i);
+                T buffer = inputs[j];
+                inputs[j] = inputs[i];
+                inputs[i] = buffer;
+
+                buffer = expected[j];
+                expected[j] = expected[i];
+                expected[i] = buffer;
+            }
         }
     }
 }
